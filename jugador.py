@@ -4,7 +4,7 @@ comportamiento y datos del Jugador
 class Jugador:
     name= None
     avatar= None
-    selected_characters=[]
+    current_characters=[]
     all_characters=[]
     selected_character=None
 
@@ -16,8 +16,7 @@ class Jugador:
     def __init__(self,name,avatar,all_characters):
         self.name= name
         self.avatar= avatar
-        self.all_characters= all_characters
-        choose_starting_characters()
+        self.current_characters=[]
 
 
     """
@@ -26,18 +25,20 @@ class Jugador:
     se revisa si el character escogido esta en current_characters y si lo esta se muestra un mensaje de advertencia
     sino entonces se agrega el character seleccionado a current_characters
     """
-    def add_starting_character(character):
-        current_characters=[]
-        if character in current_characters:
+    def add_starting_character(self,character):
+        if character in self.current_characters:
             return print("Warning: Este personaje ya ha sido elegido, elija otro")
         
         else:
-            current_characters.append(character)
+            self.current_characters.append(character)
 
             if len(current_characters) == 3:
                 return True
             else:
                 return False
+
+    def add_character(self,character):
+        self.current_characters.append(character)
 
 
     """
@@ -67,5 +68,5 @@ class Jugador:
     metodo de iniciar la batalla
     se le ordena a al selected_character que ataque al target
     """
-    def set_battle_action(self, target):
+    def attack_action(self, target):
             self.selected_character.Attack(target)

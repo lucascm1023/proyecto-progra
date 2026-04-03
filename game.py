@@ -1,3 +1,6 @@
+import tkinter
+from main_screen import Main_Screen
+
 from personaje import Personaje
 
 mickey= Personaje(100,35,50,"mickey",None,None)
@@ -18,5 +21,19 @@ darthvader= Personaje(100,88,34,"darth vader",None,None)
 
 available_characters= [mickey,pluto,winniepooh,goofy,woody,stitch,aladin,elsa,jessie,peterpan,pinocho,blancanieves,mulan,chewbaca,darthvader]
 
+class Game:
+    def __init__(self,ventana):
+        self.ventana=ventana
+        self.ventana.title("Juego Proyecto")
+        self.ventana.geometry("700x600")
+        self.current_screen=None
+        self.change_screen(Main_Screen)
+
+    def change_screen(self,screen_class):
+        if self.current_screen is not None:
+            self.current_screen.destroy()
+
+        self.current_screen = screen_class(self)
+        self.current_screen.pack(fill="both",expand=True)
 
 
