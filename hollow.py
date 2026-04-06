@@ -8,23 +8,23 @@ import random
 Comportamiento y los datos que va a tener cada hollow
 """
 
-class Hollow
-selected_characters=[]
-all_characters=[]
-avatar= None
-name= None
-selected_character= None
+class Hollow:
+    selected_characters=[]
+    all_characters=[]
+    avatar= None
+    name= None
+    selected_character= None
 
     """
     metodo del constructor de la clase
 
     Le da los valores de avatar, name, y all_characters para que despues escoga los starting_characters
     """
-    def __init__(self,avatar,name,all_characters):
+    def __init__(self,name,avatar,all_characters):
         self.avatar= avatar
         self.name= name
         self.all_characters= all_characters
-        choose_starting_characters()
+        self.choose_starting_characters()
 
     """
     Metodo de escoger los personajes iniciales de cada hollow
@@ -34,7 +34,9 @@ selected_character= None
 
     def choose_starting_characters(self):
         self.selected_characters= random.sample(self.all_characters, 3)
-
+        for character in self.selected_characters:
+            print(self.name + " escogio a " + character.name)
+        
     """
     Metodo de escoger el personaje para pelear
 

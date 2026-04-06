@@ -1,0 +1,15 @@
+100,35,50,"mickey","mickey.png",None
+100,45,50,"pluto","pluto.jpg",None
+100,23,60,"winnie pooh","winnie_pooh.png",None
+100,56,30,"goofy","goofy.png",None
+100,73,20,"woody","woody.png",None
+100,45,60,"stitch","stitch.png",None
+100,60,49,"aladin","aladin.png",None
+100,32,64,"elsa","elsa.png",None
+100,67,40,"jessie","jessie.png",None
+100,37,68,"peter pan","peter_pan.jpg",None
+100,45,39,"pinocho","pinocho.jpg",None
+100,40,50,"blancanieves","blanca_nieves.jpg",None
+100,53,62,"mulan","mulan.png",None
+100,55,70,"chewbacca","chewbacca.png",None
+100,88,34,"darth vader","darth_vader.png",None

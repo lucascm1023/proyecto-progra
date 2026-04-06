@@ -19,23 +19,6 @@ class Jugador:
         self.current_characters=[]
 
 
-    """
-    metodo de añadir los personajes iniciales
-
-    se revisa si el character escogido esta en current_characters y si lo esta se muestra un mensaje de advertencia
-    sino entonces se agrega el character seleccionado a current_characters
-    """
-    def add_starting_character(self,character):
-        if character in self.current_characters:
-            return print("Warning: Este personaje ya ha sido elegido, elija otro")
-        
-        else:
-            self.current_characters.append(character)
-
-            if len(current_characters) == 3:
-                return True
-            else:
-                return False
 
     def add_character(self,character):
         self.current_characters.append(character)

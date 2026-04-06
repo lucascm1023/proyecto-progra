@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from PIL import Image, ImageTk
 
 class Main_Screen(tk.Frame):
@@ -7,24 +8,11 @@ class Main_Screen(tk.Frame):
         self.game = game
         self.player_name_var = tk.StringVar()
         self.photo_references=[]
+        self.selection_data=[]
         self.avatar1_path = "avatar1.png"
         self.avatar2_path = "avatar2.jpg"
         self.avatar3_path = "avatar3.jpg"
-        self.character1_path = "aladin.png"
-        self.character2_path = "blanca_nieves.jpg"
-        self.character3_path = "chewbacca.png"
-        self.character4_path = "darth_vader.png"
-        self.character5_path = "elsa.png"
-        self.character6_path = "goofy.png"
-        self.character7_path = "jessie.png"
-        self.character8_path = "mickey.png"
-        self.character9_path = "mulan.png"
-        self.character10_path = "peter_pan.jpg"
-        self.character11_path = "pinocho.jpg"
-        self.character12_path = "pluto.jpg"
-        self.character13_path = "stitch.png"
-        self.character14_path = "winnie_pooh.png"
-        self.character15_path = "woody.png"
+        self.all_characters = game.all_characters
         self.selected_avatar = tk.StringVar(value= "none")
         
         self.build_ui()
@@ -32,155 +20,63 @@ class Main_Screen(tk.Frame):
     def start_game(self):
         player_name = self.player_name_var.get()
         player_avatar = self.selected_avatar.get()
+        selected_characters=[]
+        for pair in self.selection_data:
+            character= pair[0]
+            selected= pair[1]
+            if selected.get()== True:
+                selected_characters.append(character)
+        if len(selected_characters)!=3:
+            messagebox.showwarning("Invalid character selection", "You must select exactly 3 characters")
+            return
+        
         if player_name == "":
-            print("Enter your name")
+            messagebox.showwarning("Invalid name", "You must enter a name")
             return
         if player_avatar == "none":
-            print("Choose an avatar")
+            messagebox.showwarning("Invalid avatar selection", "You must select exactly 1 avatar")
             return
+        self.game.starting_characters= selected_characters
+        self.game.player_name=player_name
+        self.game.player_avatar= player_avatar
+        
         print(player_name)
         print(player_avatar)
-
+        print("Current characters:")
+        for character in self.game.starting_characters:
+            print(character.name)
+            
+        self.game.initialize_game()
+    
     def build_character_list(self):
-        
+        choose_character_frame= tk.Frame(self)
+        choose_character_frame.pack()
         character_grid_frame = tk.Frame(self)
         character_grid_frame.pack(pady=10)
+        choose_character_label= tk.Label(choose_character_frame, text= "Choose 3 Characters")
+        choose_character_label.pack()
+        row=0
+        column=0
+        for character in self.all_characters:
+            character_frame = tk.Frame(character_grid_frame)
+            character_frame.grid(row= row, column=column)
+            column= column+1
+            if column == 5:
+                column=0
+                row= row+1
+            character_image = Image.open(character.avatar)
+            character_image = character_image.resize((100,100))
+            character_photo = ImageTk.PhotoImage(character_image)
+            self.photo_references.append(character_photo)
+            character_label = tk.Label(character_frame,image=character_photo)
+            character_label.pack()
 
-        character1_frame = tk.Frame(character_grid_frame)
-        character1_frame.grid(row= 0, column=0)
-        character1 = Image.open(self.character1_path)
-        character1 = character1.resize((100,100))
-        character1_photo = ImageTk.PhotoImage(character1)
-        self.photo_references.append(character1_photo)
-        character1_label = tk.Label(character1_frame,image=character1_photo)
-        character1_label.pack()
-
-        character2_frame = tk.Frame(character_grid_frame)
-        character2_frame.grid(row= 0, column=1)
-        character2 = Image.open(self.character2_path)
-        character2 = character2.resize((100,100))
-        character2_photo = ImageTk.PhotoImage(character2)
-        self.photo_references.append(character2_photo)
-        character2_label = tk.Label(character2_frame,image=character2_photo)
-        character2_label.pack()
-
-        character3_frame = tk.Frame(character_grid_frame)
-        character3_frame.grid(row= 0, column=2)
-        character3 = Image.open(self.character3_path)
-        character3 = character3.resize((100,100))
-        character3_photo = ImageTk.PhotoImage(character3)
-        self.photo_references.append(character3_photo)
-        character3_label = tk.Label(character3_frame,image=character3_photo)
-        character3_label.pack()
-
-        character4_frame = tk.Frame(character_grid_frame)
-        character4_frame.grid(row= 0, column=3)
-        character4 = Image.open(self.character4_path)
-        character4 = character4.resize((100,100))
-        character4_photo = ImageTk.PhotoImage(character4)
-        self.photo_references.append(character4_photo)
-        character4_label = tk.Label(character4_frame,image=character4_photo)
-        character4_label.pack()
-
-        character5_frame = tk.Frame(character_grid_frame)
-        character5_frame.grid(row= 0, column=4)
-        character5 = Image.open(self.character5_path)
-        character5 = character5.resize((100,100))
-        character5_photo = ImageTk.PhotoImage(character5)
-        self.photo_references.append(character5_photo)
-        character5_label = tk.Label(character5_frame,image=character5_photo)
-        character5_label.pack()
-
-        character6_frame = tk.Frame(character_grid_frame)
-        character6_frame.grid(row= 1, column=0)
-        character6 = Image.open(self.character6_path)
-        character6 = character6.resize((100,100))
-        character6_photo = ImageTk.PhotoImage(character6)
-        self.photo_references.append(character6_photo)
-        character6_label = tk.Label(character6_frame,image=character6_photo)
-        character6_label.pack()
-
-        character7_frame = tk.Frame(character_grid_frame)
-        character7_frame.grid(row= 1, column=1)
-        character7 = Image.open(self.character7_path)
-        character7 = character7.resize((100,100))
-        character7_photo = ImageTk.PhotoImage(character7)
-        self.photo_references.append(character7_photo)
-        character7_label = tk.Label(character7_frame,image=character7_photo)
-        character7_label.pack()
-
-        character8_frame = tk.Frame(character_grid_frame)
-        character8_frame.grid(row= 1, column=2)
-        character8 = Image.open(self.character8_path)
-        character8 = character8.resize((100,100))
-        character8_photo = ImageTk.PhotoImage(character8)
-        self.photo_references.append(character8_photo)
-        character8_label = tk.Label(character8_frame,image=character8_photo)
-        character8_label.pack()
-
-        character9_frame = tk.Frame(character_grid_frame)
-        character9_frame.grid(row= 1, column=3)
-        character9 = Image.open(self.character9_path)
-        character9 = character9.resize((100,100))
-        character9_photo = ImageTk.PhotoImage(character9)
-        self.photo_references.append(character9_photo)
-        character9_label = tk.Label(character9_frame,image=character9_photo)
-        character9_label.pack()
-
-        character10_frame = tk.Frame(character_grid_frame)
-        character10_frame.grid(row= 1, column=4)
-        character10 = Image.open(self.character10_path)
-        character10 = character10.resize((100,100))
-        character10_photo = ImageTk.PhotoImage(character10)
-        self.photo_references.append(character10_photo)
-        character10_label = tk.Label(character10_frame,image=character10_photo)
-        character10_label.pack()
-
-        character11_frame = tk.Frame(character_grid_frame)
-        character11_frame.grid(row= 2, column=0)
-        character11 = Image.open(self.character11_path)
-        character11 = character11.resize((100,100))
-        character11_photo = ImageTk.PhotoImage(character11)
-        self.photo_references.append(character11_photo)
-        character11_label = tk.Label(character11_frame,image=character11_photo)
-        character11_label.pack()
-
-        character12_frame = tk.Frame(character_grid_frame)
-        character12_frame.grid(row= 2, column=1)
-        character12 = Image.open(self.character12_path)
-        character12 = character12.resize((100,100))
-        character12_photo = ImageTk.PhotoImage(character12)
-        self.photo_references.append(character12_photo)
-        character12_label = tk.Label(character12_frame,image=character12_photo)
-        character12_label.pack()
-
-        character13_frame = tk.Frame(character_grid_frame)
-        character13_frame.grid(row= 2, column=2)
-        character13 = Image.open(self.character13_path)
-        character13 = character13.resize((100,100))
-        character13_photo = ImageTk.PhotoImage(character13)
-        self.photo_references.append(character13_photo)
-        character13_label = tk.Label(character13_frame,image=character13_photo)
-        character13_label.pack()
-
-        character14_frame = tk.Frame(character_grid_frame)
-        character14_frame.grid(row= 2, column=3)
-        character14 = Image.open(self.character14_path)
-        character14 = character14.resize((100,100))
-        character14_photo = ImageTk.PhotoImage(character14)
-        self.photo_references.append(character14_photo)
-        character14_label = tk.Label(character14_frame,image=character14_photo)
-        character14_label.pack()
-
-        character15_frame = tk.Frame(character_grid_frame)
-        character15_frame.grid(row= 2, column=4)
-        character15 = Image.open(self.character15_path)
-        character15 = character15.resize((100,100))
-        character15_photo = ImageTk.PhotoImage(character15)
-        self.photo_references.append(character15_photo)
-        character15_label = tk.Label(character15_frame,image=character15_photo)
-        character15_label.pack()
-        
+            selected=tk.BooleanVar()
+            character_check = tk.Checkbutton(character_frame,text=character.name,variable=selected)
+            character_check.pack()
+            self.selection_data.append([character,selected])
+            
+    
     def build_ui(self):
         tittle_label= tk.Label(self, text="Disney´s Epic Adventure", font=("Arial",18,"bold"))
         tittle_label.pack()
@@ -194,6 +90,11 @@ class Main_Screen(tk.Frame):
         name_entry= tk.Entry(name_frame, textvariable=self.player_name_var, width=25)
         name_entry.pack()
 
+        avatar_label_frame= tk.Frame(self)
+        avatar_label_frame.pack()
+        avatar_label= tk.Label(avatar_label_frame, text= "Choose your Avatar")
+        avatar_label.pack()
+        
         avatar_grid_frame = tk.Frame(self)
         avatar_grid_frame.pack(pady=10)
 
@@ -234,7 +135,7 @@ class Main_Screen(tk.Frame):
         avatar3_radio.pack()
 
         self.build_character_list()
-
+    
         button_frame = tk.Frame(self)
         button_frame.pack()
 

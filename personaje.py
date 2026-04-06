@@ -10,7 +10,21 @@ class Personaje:
     name=""
     avatar=None
     owner=None
-    
+
+
+    """
+    metodo del constructor de la clase
+
+    Le da los valores de hp, attack, defense, name, avatar y owner a cada personaje
+    """
+
+    def __init__(self,hp,attack,defense,name,avatar,owner):
+        self.hp= hp
+        self.attack_value= attack
+        self.defense_value= defense
+        self.name= name
+        self.avatar= avatar
+        self.owner= owner 
     """
     metodo de la accion atacar
 
@@ -42,16 +56,4 @@ class Personaje:
         else:
             return False
 
-    """
-    metodo del constructor de la clase
-
-    Le da los valores de hp, attack, defense, name, avatar y owner a cada personaje
-    """
-
-    def __init__(self,hp,attack,defense,name,avatar,owner):
-        self.hp= hp
-        self.attack_value= attack
-        self.defense_value= defense
-        self.name= name
-        self.avatar= avatar
-        self.owner= owner
+   

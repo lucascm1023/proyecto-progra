@@ -1,34 +1,25 @@
 import tkinter
+import csv
+from jugador import Jugador
 from main_screen import Main_Screen
-
+from map_screen import Map_Screen
+from hollow import Hollow
 from personaje import Personaje
 
-mickey= Personaje(100,35,50,"mickey",None,None)
-pluto= Personaje(100,45,50,"pluto",None,None)
-winniepooh= Personaje(100,23,60,"winnie pooh",None,None)
-goofy= Personaje(100,56,30,"goofy",None,None)
-woody= Personaje(100,73,20,"woody",None,None)
-stitch= Personaje(100,45,60,"stitch",None,None)
-aladin= Personaje(100,60,49,"aladin",None,None)
-elsa= Personaje(100,32,64,"elsa",None,None)
-jessie= Personaje(100,67,40,"jessie",None,None)
-peterpan= Personaje(100,37,68,"peter pan",None,None)
-pinocho= Personaje(100,45,39,"pincho",None,None)
-blancanieves= Personaje(100,40,50,"blancanieves",None,None)
-mulan= Personaje(100,53,62,"mulan",None,None)
-chewbaca= Personaje(100,55,70,"chewbaca",None,None)
-darthvader= Personaje(100,88,34,"darth vader",None,None)
-
-available_characters= [mickey,pluto,winniepooh,goofy,woody,stitch,aladin,elsa,jessie,peterpan,pinocho,blancanieves,mulan,chewbaca,darthvader]
 
 class Game:
     def __init__(self,ventana):
         self.ventana=ventana
         self.ventana.title("Juego Proyecto")
-        self.ventana.geometry("700x600")
+        self.ventana.geometry("1600x900")
+        self.all_characters=[]
+        self.starting_characters=[]
+        self.player_name= ""
+        self.player_avatar=""
+        self.build_characters()
         self.current_screen=None
         self.change_screen(Main_Screen)
-
+        
     def change_screen(self,screen_class):
         if self.current_screen is not None:
             self.current_screen.destroy()
@@ -37,3 +28,19 @@ class Game:
         self.current_screen.pack(fill="both",expand=True)
 
 
+    def build_characters(self):
+        with open("characters.txt", "r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            for fila in reader:
+                character = Personaje(fila[0],fila[1],fila[2],fila[3],fila[4],fila[5])
+                self.all_characters.append(character)
+            
+    def initialize_game(self):
+        self.player = Jugador(self.player_name,self.player_avatar,self.starting_characters)
+        self.hollow1 = Hollow("Hollow 1","hollow1.png",self.all_characters)
+        self.hollow2 = Hollow("Hollow 2","hollow2.jpg",self.all_characters)
+        self.hollow3 = Hollow("Hollow 3","hollow3.jpg",self.all_characters)
+        self.hollow4 = Hollow("Hollow 4","hollow4.png",self.all_characters)
+        self.hollow5 = Hollow("Hollow 5","hollow5.jpg",self.all_characters)
+
+        self.change_screen(Map_Screen)
